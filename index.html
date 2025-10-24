@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản tin thị trường - 23/10/2025</title>
+    <title>Infographic Bản Tin Sáng 24.10.2025</title>
     <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Sử dụng font Inter -->
+    <!-- Cấu hình font chữ Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,227 +14,136 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Định nghĩa một số icon SVG để sử dụng lại */
-        .icon {
-            width: 1.5rem;
-            height: 1.5rem;
-            stroke-width: 2;
-            flex-shrink: 0;
+        /* Thêm một chút hiệu ứng cho các card */
+        .info-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .icon-lg {
-            width: 2.5rem;
-            height: 2.5rem;
-            stroke-width: 1.5;
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
         }
     </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Bật dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e40af', // Xanh đậm
+                        'secondary': '#1d4ed8', // Xanh vừa
+                        'card-dark': '#1f2937', // Nền card dark mode
+                        'text-dark-primary': '#f3f4f6', // Chữ chính dark mode
+                        'text-dark-secondary': '#9ca3af', // Chữ phụ dark mode
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-100 p-4 md:p-8">
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-6 md:p-12 transition-colors duration-300">
 
-    <!-- SVG Icons Definition -->
-    <svg width="0" height="0" class="absolute">
-        <defs>
-            <!-- Diễn biến (Đảo chiều) -->
-            <svg id="icon-trending-up" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0-3.937 9.567M21.75 6H12" />
-            </svg>
-            <!-- Thanh khoản (Biểu đồ) -->
-            <svg id="icon-chart-bar" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25C3.504 21 3 20.496 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125V4.125Z" />
-            </svg>
-            <!-- Khối ngoại (Toàn cầu) -->
-            <svg id="icon-globe" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9Z" />
-            </svg>
-            <!-- Ngành (Biểu đồ tròn) -->
-            <svg id="icon-pie-chart" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
-            </svg>
-            <!-- Kết luận (Thông tin) -->
-            <svg id="icon-info" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-            </svg>
-            <!-- Kháng cự (Khiên) -->
-            <svg id="icon-shield" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.4-1.683 3.055A10.5 10.5 0 0 1 12 21c-2.22 0-4.24-.7-5.964-1.89A10.516 10.516 0 0 1 3 12c0-5.798 4.702-10.5 10.5-10.5S21 6.202 21 12Z" />
-            </svg>
-            <!-- Nắm giữ cổ phiếu (Cặp) -->
-            <svg id="icon-briefcase" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.02a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18.17V14.15M20.25 14.15V10.5a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 10.5v3.65m16.5 0c.621 0 1.125-.504 1.125-1.125v-2.016c0-.621-.504-1.125-1.125-1.125H3.75c-.621 0-1.125.504-1.125 1.125v2.016c0 .621.504 1.125 1.125 1.125m16.5 0h-16.5" />
-            </svg>
-            <!-- Tiền mặt (Tiền) -->
-            <svg id="icon-money" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.75A.75.75 0 0 1 3 4.5h.75m0 0v.75A.75.75 0 0 1 3 6h-.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008ZM12 15h.008v.008H12v-.008Zm0-3h.008v.008H12v-.008Zm0-3h.008v.008H12V9Z" />
-            </svg>
-            <!-- Ưu tiên (Ngôi sao) -->
-            <svg id="icon-star" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.31h5.51c.52 0 .73.655.328 1.01l-4.2 3.548a.563.563 0 0 0-.192.583l1.63 5.43a.562.562 0 0 1-.84.62l-4.62-3.832a.563.563 0 0 0-.64 0l-4.62 3.832a.562.562 0 0 1-.84-.62l1.63-5.43a.563.563 0 0 0-.192-.583l-4.2-3.548a.562.562 0 0 1 .328-1.01h5.51a.563.563 0 0 0 .475-.31l2.125-5.111Z" />
-            </svg>
-            <!-- Rủi ro (Cảnh báo) -->
-            <svg id="icon-warning" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.008v.008H12v-.008Z" />
-            </svg>
-        </defs>
-    </svg>
-
-    <main class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <!-- Header -->
-        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 md:p-8">
-            <h1 class="text-3xl md:text-4xl font-bold">Bản Tin Thị Trường</h1>
-            <p class="text-xl md:text-2xl font-light">Ngày 23 tháng 10 năm 2025</p>
+    <div class="container mx-auto max-w-5xl">
+        
+        <!-- Tiêu đề chính -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-blue-400">
+                BẢN TIN SÁNG 24.10.2025
+            </h1>
+            <p class="text-xl md:text-2xl font-medium text-gray-700 dark:text-gray-300 mt-2">
+                THẬN TRỌNG QUAN SÁT
+            </p>
         </header>
 
-        <div class="p-6 md:p-8 space-y-8">
-            <!-- Phần 1: Tổng kết phiên 22/10 -->
-            <section>
-                <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b-2 border-indigo-200 pb-2">
-                    Tổng kết phiên trước (22/10)
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Diễn biến chính -->
-                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <svg class="icon text-green-600"><use xlink:href="#icon-trending-up"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">Diễn biến chính</h3>
-                            <p class="text-gray-600">Biên độ lớn, <span class="font-semibold text-green-700">đảo chiều ngoạn mục</span> cuối phiên, kết thúc tăng điểm. Dòng tiền nội phục hồi tốt.</p>
-                        </div>
-                    </div>
-                    <!-- Thanh khoản -->
-                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <svg class="icon text-red-600"><use xlink:href="#icon-chart-bar"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">Điểm trừ: Thanh khoản</h3>
-                            <p class="text-gray-600">Thanh khoản <span class="font-semibold text-red-700">dưới bình quân 20 phiên</span>. Động lực chính là "tiết cung" hơn là lực cầu mạnh.</p>
-                        </div>
-                    </div>
-                    <!-- Khối ngoại -->
-                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <svg class="icon text-red-600"><use xlink:href="#icon-globe"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">Khối ngoại</h3>
-                            <p class="text-gray-600"><span class="font-semibold text-red-700">Quay lại bán ròng</span>. Dòng tiền nội đủ sức cân bằng thị trường.</p>
-                        </div>
-                    </div>
-                    <!-- Phân hóa ngành -->
-                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <svg class="icon text-blue-600"><use xlink:href="#icon-pie-chart"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">Phân hóa ngành</h3>
-                            <ul class="list-disc list-inside text-gray-600">
-                                <li><span class="font-semibold text-green-700">Điểm sáng:</span> Dầu khí, Phân bón.</li>
-                                <li><span class="font-semibold text-blue-700">Hỗ trợ:</span> VN30, Bất động sản.</li>
-                                <li><span class="font-semibold text-gray-700">Phân hóa:</span> Ngân hàng, Chứng khoán.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Kết luận phiên -->
-                <div class="mt-6 flex items-center space-x-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg">
-                    <svg class="icon flex-shrink-0"><use xlink:href="#icon-info"></use></svg>
-                    <p><span class="font-semibold">Kết luận:</span> Phục hồi mang tính <span class="font-semibold">KỸ THUẬT</span>, chưa cân bằng. Tâm lý <span class="font-semibold">"GIẢM LÀ MUA"</span> đang mạnh dần.</p>
-                </div>
-            </section>
+        <!-- Lưới nội dung -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
-            <!-- Phần 2: Nhận định phiên 23/10 -->
-            <section>
-                <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b-2 border-indigo-200 pb-2">
-                    Nhận định phiên tới (23/10)
-                </h2>
-                <div class="flex flex-col md:flex-row gap-6">
-                    <!-- Xu hướng -->
-                    <div class="flex-1 flex items-center space-x-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <svg class="icon-lg text-blue-600"><use xlink:href="#icon-trending-up"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-xl text-blue-800">Xu hướng tăng điểm</h3>
-                            <p class="text-gray-700">Tiếp tục quán tính tăng đầu phiên do hiệu ứng tâm lý. Rung lắc và phân hóa mạnh có thể xuất hiện.</p>
-                        </div>
-                    </div>
-                    <!-- Kháng cự -->
-                    <div class="flex-1 flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <svg class="icon-lg text-gray-700"><use xlink:href="#icon-shield"></use></svg>
-                        <div>
-                            <h3 class="font-semibold text-xl text-gray-800">Ngưỡng kháng cự</h3>
-                            <p class="text-gray-700">VN-Index kiểm tra lại mốc <span class="font-bold text-gray-900">1.695 điểm</span> và cản tâm lý <span class="font-bold text-gray-900">1.700 điểm</span>.</p>
-                        </div>
-                    </div>
+            <!-- Card 1: Đánh giá phiên trước -->
+            <div class="info-card bg-white dark:bg-card-dark rounded-xl shadow-lg p-6 overflow-hidden">
+                <div class="flex items-center space-x-3 mb-4">
+                    <!-- Icon Biểu đồ -->
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m6 0v-6a2 2 0 00-2-2h-2a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-text-dark-primary">
+                        ĐÁNH GIÁ PHIÊN TRƯỚC (23/10)
+                    </h3>
                 </div>
-            </section>
+                <ul class="space-y-3 text-gray-700 dark:text-text-dark-secondary list-inside">
+                    <li><strong class="text-gray-800 dark:text-gray-100">Tổng quan:</strong> Thị trường giằng co, phân hóa mạnh.</li>
+                    <li><strong class="text-gray-800 dark:text-gray-100">Chỉ số:</strong> VN-Index tăng nhẹ (nhờ VIC, VHM).</li>
+                    <li><strong class="text-gray-800 dark:text-gray-100">Thanh khoản:</strong> Sụt giảm mạnh, tâm lý thận trọng.</li>
+                    <li><strong class="text-gray-800 dark:text-gray-100">Dòng tiền:</strong> Đứng ngoài quan sát, chốt lời (nhóm Chứng khoán).</li>
+                    <li><strong class="text-gray-800 dark:text-gray-100">Khối ngoại:</strong> Tiếp tục bán ròng.</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p class="font-semibold text-center text-gray-800 dark:text-gray-100">
+                        Kết luận: Nhịp tăng mang tính hồi kỹ thuật, chưa bền vững.
+                    </p>
+                </div>
+            </div>
 
-            <!-- Phần 3: Chiến lược hành động -->
-            <section>
-                <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b-2 border-indigo-200 pb-2">
-                    Chiến lược & Gợi ý hành động
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Đang nắm giữ cổ phiếu -->
-                    <div class="p-6 bg-blue-50 rounded-lg border border-blue-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="icon text-blue-700"><use xlink:href="#icon-briefcase"></use></svg>
-                            <h3 class="text-xl font-semibold text-blue-800">Đang nắm giữ cổ phiếu</h3>
-                        </div>
-                        <ul class="space-y-2 list-disc list-inside text-gray-700">
-                            <li>Tiếp tục nắm giữ danh mục.</li>
-                            <li>Tận dụng nhịp tăng để cơ cấu lại.</li>
-                            <li>Đưa tỷ trọng về mức cân bằng, an toàn.</li>
-                            <li>Tránh sử dụng margin quá cao.</li>
-                        </ul>
-                    </div>
-                    <!-- Tỷ trọng tiền mặt cao -->
-                    <div class="p-6 bg-green-50 rounded-lg border border-green-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="icon text-green-700"><use xlink:href="#icon-money"></use></svg>
-                            <h3 class="text-xl font-semibold text-green-800">Có tỷ trọng tiền mặt cao</h3>
-                        </div>
-                        <ul class="space-y-2 list-disc list-inside text-gray-700">
-                            <li>Mua mới hoặc gia tăng cần <span class="font-semibold">thận trọng</span>.</li>
-                            <li><span class="font-semibold text-red-700">KHÔNG mua đuổi</span> theo đà tăng nóng.</li>
-                            <li>Ưu tiên giải ngân DẦN vào phiên điều chỉnh.</li>
-                            <li>Mua khi cổ phiếu về vùng hỗ trợ tin cậy.</li>
-                        </ul>
-                    </div>
+            <!-- Card 2: Nhận định phiên tới -->
+            <div class="info-card bg-white dark:bg-card-dark rounded-xl shadow-lg p-6 overflow-hidden">
+                <div class="flex items-center space-x-3 mb-4">
+                    <!-- Icon Kính lúp -->
+                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-text-dark-primary">
+                        NHẬN ĐỊNH PHIÊN TỚI (24/10)
+                    </h3>
                 </div>
-            </section>
+                <ul class="space-y-3 text-gray-700 dark:text-text-dark-secondary">
+                    <li><strong class="text-gray-800 dark:text-gray-100">Dự báo:</strong> Tiếp tục giằng co và phân hóa.</li>
+                    <li class="mt-4">
+                        <strong class="text-gray-800 dark:text-gray-100">Vùng dao động:</strong>
+                        <div class="text-center bg-gray-100 dark:bg-gray-800 rounded-lg p-3 my-2">
+                            <span class="text-lg font-bold text-secondary dark:text-blue-400">1650 - 1700 điểm</span>
+                        </div>
+                    </li>
+                    <li><strong class="text-gray-800 dark:text-gray-100">Thách thức:</strong> Thanh khoản thấp, khó bứt phá mạnh qua 1700.</li>
+                </ul>
+            </div>
 
-            <!-- Phần 4: Tiêu điểm & Rủi ro -->
-            <section>
-                <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b-2 border-indigo-200 pb-2">
-                    Tiêu điểm & Rủi ro
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Ưu tiên lựa chọn -->
-                    <div class="p-6 bg-gray-50 rounded-lg">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="icon text-yellow-500 fill-current"><use xlink:href="#icon-star"></use></svg>
-                            <h3 class="text-xl font-semibold text-gray-800">Ưu tiên lựa chọn</h3>
-                        </div>
-                        <ul class="space-y-2 list-disc list-inside text-gray-700">
-                            <li>Cổ phiếu có nền tảng cơ bản tốt.</li>
-                            <li>Kết quả kinh doanh Quý III tích cực.</li>
-                            <li>Có tín hiệu dòng tiền nhập cuộc mạnh mẽ.</li>
+            <!-- Card 3: Chiến lược & Hành động -->
+            <div class="info-card bg-white dark:bg-card-dark rounded-xl shadow-lg p-6 overflow-hidden">
+                <div class="flex items-center space-x-3 mb-4">
+                    <!-- Icon Mục tiêu -->
+                    <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M15 16h.01"></path></svg>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-text-dark-primary">
+                        CHIẾN LƯỢC & HÀNH ĐỘNG
+                    </h3>
+                </div>
+                
+                <div class="text-center bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg p-3 mb-4">
+                    <strong class="text-red-700 dark:text-red-200">ƯU TIÊN HÀNG ĐẦU: QUẢN TRỊ RỦI RO</strong>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-100">Hành động Mua:</h4>
+                        <ul class="list-disc list-inside text-gray-700 dark:text-text-dark-secondary ml-4">
+                            <li><strong class="text-red-600 dark:text-red-400">KHÔNG</strong> mua đuổi.</li>
+                            <li><strong class="text-green-600 dark:text-green-400">CÂN NHẮC</strong> mua tại nhịp điều chỉnh.</li>
+                            <li><strong>Ưu tiên:</strong> Cổ phiếu cơ bản tốt, KQKD Quý III tích cực, đầu ngành.</li>
                         </ul>
                     </div>
-                    <!-- Rủi ro ngắn hạn -->
-                    <div class="p-6 bg-red-50 rounded-lg border border-red-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="icon text-red-600"><use xlink:href="#icon-warning"></use></svg>
-                            <h3 class="text-xl font-semibold text-red-800">Góc nhìn thận trọng</h3>
-                        </div>
-                        <ul class="space-y-2 list-disc list-inside text-red-700">
-                            <li>Rủi ro từ khối ngoại & áp lực tỷ giá.</li>
-                            <li><span class="font-semibold">Then chốt:</span> Quản trị rủi ro.</li>
-                            <li>Theo dõi sát thanh khoản, độ rộng thị trường.</li>
-                            <li>Thị trường cần thời gian tích lũy thêm.</li>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-100">Hành động Bán/Cơ cấu:</h4>
+                        <ul class="list-disc list-inside text-gray-700 dark:text-text-dark-secondary ml-4">
+                            <li>Tận dụng nhịp hồi để cơ cấu.</li>
+                            <li><strong>Ưu tiên xử lý:</strong> Cổ phiếu yếu, vi phạm cắt lỗ.</li>
                         </ul>
                     </div>
                 </div>
-            </section>
+            </div>
+
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center p-6 bg-gray-800 text-gray-400 text-sm">
-            Chúc Quý Nhà đầu tư một ngày giao dịch hiệu quả!
+        <!-- Disclaimer -->
+        <footer class="text-center mt-10">
+            <p class="text-xs italic text-gray-500 dark:text-gray-400">
+                Tuyên bố miễn trừ trách nhiệm: Thông tin trên chỉ mang tính chất tham khảo, không phải là lời khuyên đầu tư.
+            </p>
         </footer>
-    </main>
+
+    </div>
 
 </body>
 </html>
